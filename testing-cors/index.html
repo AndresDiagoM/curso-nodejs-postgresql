@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CORS Test Page</title>
+  </head>
+  <body>
+    <h1>CORS Test Page</h1>
+    <p>Click the button below to make a CORS request to your Node.js app:</p>
+    <button onclick="makeCorsRequest()">Make CORS Request</button>
+    <script>
+      function makeCorsRequest() {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', 'http://localhost:3000/nueva-ruta');
+        xhr.onload = function() {
+          if (xhr.status === 200) {
+            console.log('Success!');
+          } else {
+            console.log('Error: ' + xhr.status);
+          }
+        };
+        xhr.send();
+      }
+    </script>
+    <script>
+      (async () => {
+        const response = await fetch('http://localhost:3000/nueva-ruta');
+        const data = await response.json();
+        console.log(data);
+      })();
+    </script>
+  </body>
+</html>
