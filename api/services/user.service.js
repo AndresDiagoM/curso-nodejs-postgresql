@@ -2,12 +2,18 @@ const {faker} = require('@faker-js/faker');
 const boom = require('@hapi/boom');
 
 const getConnection = require('../../libs/postgres');
+const pool = require('../../libs/postgres.pool');
 
 class UsersService  {
 
   constructor() {
     this.users = [];
     // this.generate();
+    this.pool = pool;
+    this.pool.on('error', (err, client) => {
+      console.error('Unexpected error on idle client', err);
+      process.exit(-1);
+    });
   }
 
   // generate(){
@@ -25,9 +31,15 @@ class UsersService  {
   // }
 
   async getAll(limit, offset) {
-    const client = await getConnection();
-    const result = await client.query('SELECT * FROM task');
-
+    // const client = await getConnection();
+    // const result = await client.query('SELECT * FROM task');
+    if(!limit || !offset) {
+      const query = 'SELECT * FROM users';
+      const result = await this.pool.query(query);
+      return result.rows;
+    }
+    const query = `SELECT * FROM users LIMIT ${limit} OFFSET ${offset}`;
+    const result = await this.pool.query(query);
     return result.rows;
   }
 
