@@ -8,25 +8,11 @@ class ProductsService {
 
   constructor() {
     this.products = [];
-    this.generate();
     this.pool = pool;
     this.pool.on('error', (err, client) => {
       console.error('Unexpected error on idle client', err);
       process.exit(-1);
     });
-  }
-
-  generate(){
-    let size = 20;
-    for(let i=0; i<size; i++){
-      this.products.push({
-        id: faker.string.uuid(),
-        name: faker.commerce.productName(),
-        price: parseInt(faker.commerce.price(), 10),
-        image: faker.image.url(),
-        isBlock: faker.datatype.boolean(),
-      });
-    }
   }
 
   async getAll() {
