@@ -8,12 +8,7 @@ const { models } = require('../../libs/sequelize');
 class UsersService  {
 
   constructor() {
-    this.users = [];
-    this.pool = pool;
-    this.pool.on('error', (err, client) => {
-      console.error('Unexpected error on idle client', err);
-      process.exit(-1);
-    });
+
   }
 
   async getAll(limit, offset) {
@@ -45,29 +40,22 @@ class UsersService  {
   }
 
   async update(id, changes) {
-    //update using sequelize
     this.find(id);
     try{
-      const user = await models.User.update(changes, {
-        where: {
-          id,
-        }
+      const rta = await models.User.update(changes, {
+        where: {id}
       });
-      return user;
+      return rta;
     }catch(err){
       throw boom.notFound('error updating user');
     }
   }
 
   async delete(id) {
-    this.find(id);
     try{
-      const user = await models.User.destroy({
-        where: {
-          id,
-        }
-      });
-      return user;
+      const user = await this.find(id);
+      const rta = (await user).destroy();
+      return id;
     }catch(err){
       throw boom.notFound('error deleting user');
     }

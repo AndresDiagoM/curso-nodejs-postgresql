@@ -4,7 +4,7 @@ const id = Joi.alternatives().try(Joi.string().uuid(), Joi.number());
 const name = Joi.string().min(3).max(30).alphanum();
 const lastName = Joi.string().min(3).max(30).alphanum();
 const email = Joi.string().email();
-const password = Joi.string().min(8).max(16).alphanum();
+const password = Joi.string().min(8).max(30).alphanum();
 const isBlock = Joi.boolean();
 
 const createUserSchema = Joi.object({
