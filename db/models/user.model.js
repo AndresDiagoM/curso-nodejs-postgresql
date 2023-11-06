@@ -21,6 +21,7 @@ const UserSchema = {
   email: {
     type: DataTypes.STRING(50),
     allowNull: false,
+    unique: true, // this is a validation, not a constraint
   },
   password: {
     type: DataTypes.STRING(50),

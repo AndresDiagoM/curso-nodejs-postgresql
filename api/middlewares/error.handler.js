@@ -1,6 +1,8 @@
+const { ValidationError} = require('sequelize');
+
 function logErrors(err, req, res, next) {
   console.log('logErrors')
-  console.log(err)
+  console.log(err.errors)
   next(err)
 }
 
@@ -9,6 +11,7 @@ function errorHandler(err, req, res, next) {
   res.status(500).json({
     message: err.message,
     // stack: err.stack, // this is not a good practice
+    error: err,
   })
 }
 
@@ -26,4 +29,18 @@ function boomErrorHandler(err, req, res, next) {
   }
 }
 
-module.exports = {logErrors, errorHandler, boomErrorHandler}
+// middleware to handle sequelize errors
+function sequelizeErrorHandler(err, req, res, next) {
+  console.log('sequelizeErrorHandler')
+  if (err instanceof ValidationError) {
+    res.status(409).json({
+      name: err.name,
+      message: err.message,
+      error: err.errors,
+    })
+  }else{
+    next(err)
+  }
+}
+
+module.exports = {logErrors, errorHandler, boomErrorHandler, sequelizeErrorHandler}

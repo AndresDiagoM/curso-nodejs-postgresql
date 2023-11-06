@@ -6,7 +6,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 //middlewares
-const {logErrors, errorHandler, boomErrorHandler} = require('./middlewares/error.handler');
+const {logErrors, errorHandler, boomErrorHandler, sequelizeErrorHandler} = require('./middlewares/error.handler');
 
 
 app.use(express.json()); // for being able to read the body of the request
@@ -44,6 +44,7 @@ routerApi(app);
 // los middlewares de error deben ir al final de las rutas, y el orden es importante
 app.use(cors(options)); // CORS ES UN MIDDLEWARE - Enable All CORS Requests
 app.use(logErrors);
+app.use(sequelizeErrorHandler);
 app.use(boomErrorHandler);
 app.use(errorHandler);
 
