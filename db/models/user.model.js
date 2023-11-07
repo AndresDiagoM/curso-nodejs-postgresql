@@ -49,8 +49,11 @@ const UserSchema = {
 // sequelize allows to use migrations
 class User extends Model {
   // static methods -> this are class methods, not instance methods
-  static associate(){
-
+  static associate(models){
+    this.hasOne(models.Customer, {
+      foreignKey: 'user_id',
+      as: 'customer',
+    });
   }
 
   static config(sequelize) {

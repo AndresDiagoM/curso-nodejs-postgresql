@@ -13,6 +13,7 @@ function setupModels(sequelize){
 
   // ejecutar asociaciones
   Customer.associate(sequelize.models);
+  User.associate(sequelize.models);
 }
 
 module.exports = { setupModels};

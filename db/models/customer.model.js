@@ -50,6 +50,7 @@ const CustomerSchema = {
     },
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL',
+    unique: true,
   },
 }
 
@@ -58,8 +59,7 @@ class Customer extends Model {
   // static methods -> this are class methods, not instance methods
   static associate(models){
     this.belongsTo(models.User, {
-      as: 'user',
-      foreignKey: 'user_id',
+      as: 'user',  // with this alias, we can use it to include the user in the findAll method in customer service
     });
   }
 

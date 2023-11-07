@@ -10,7 +10,9 @@ class CustomersService  {
   }
 
   async getAll(limit, offset) {
-    const result = await models.Customer.findAll();
+    const result = await models.Customer.findAll({
+      include: ['user'],
+    });
     return result;
   }
 
@@ -18,11 +20,9 @@ class CustomersService  {
     if(!customer || Object.keys(customer).length === 0) {
       throw boom.badRequest('invalid data');
     }
-    let newUser = {
-      ...customer,
-      createdAt: new Date(),
-    }
-    let created = await models.Customer.create(newUser);
+    let created = await models.Customer.create(customer, {
+      include: ['user'],
+    });
     return created;
   }
 

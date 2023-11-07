@@ -8,13 +8,22 @@ const email = Joi.string().email();
 const birthDate = Joi.date();
 const userId = Joi.number();
 
+
 const createCustomerSchema = Joi.object({
   name: name.required(),
   lastName: lastName.required(),
   email: email.required(),
   address: address.required(),
   birthDate: birthDate.required(),
-  userId: userId.required(),
+  // userId: userId.required(),
+  user: Joi.object({
+    name: name.required(),
+    lastName: lastName.required(),
+    email: email.required(),
+    password: Joi.string().min(8).max(30).alphanum(),
+    role: Joi.string().valid('admin', 'user'),
+    // isBlock: Joi.boolean(),
+  }),
 });
 
 const updateCustomerSchema = Joi.object({
