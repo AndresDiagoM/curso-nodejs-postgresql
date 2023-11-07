@@ -17,6 +17,8 @@ const sequelize = new Sequelize(URI, {
 }); //it already use pool connection
 
 setupModels(sequelize);
-sequelize.sync(); // sync all models with database, creating tables if not exists
+// sequelize.sync(); // sync all models with database, creating tables if not exists
+
+//
 
 module.exports = sequelize;
