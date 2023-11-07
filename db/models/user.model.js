@@ -27,6 +27,11 @@ const UserSchema = {
     type: DataTypes.STRING(50),
     allowNull: false,
   },
+  role: {
+    type: DataTypes.ENUM('admin', 'user'),
+    allowNull: false,
+    defaultValue: 'user',
+  },
   isBlock: {
     type: DataTypes.BOOLEAN,
     field: 'is_block',

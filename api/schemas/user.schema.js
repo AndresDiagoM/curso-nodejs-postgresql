@@ -5,6 +5,7 @@ const name = Joi.string().min(3).max(30).alphanum();
 const lastName = Joi.string().min(3).max(30).alphanum();
 const email = Joi.string().email();
 const password = Joi.string().min(8).max(30).alphanum();
+const role = Joi.string().valid('admin', 'user');
 const isBlock = Joi.boolean();
 
 const createUserSchema = Joi.object({
@@ -12,7 +13,8 @@ const createUserSchema = Joi.object({
   lastName: lastName.required(),
   email: email.required(),
   password: password.required(),
-  isBlock,
+  role: role.required(),
+  isBlock: isBlock.required(),
 });
 
 const updateUserSchema = Joi.object({
@@ -20,6 +22,7 @@ const updateUserSchema = Joi.object({
   lastName,
   email,
   password,
+  role,
   isBlock,
 });
 
