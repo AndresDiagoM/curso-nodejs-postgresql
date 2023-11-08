@@ -25,16 +25,6 @@ router.get('/:id',
   }
 );
 
-router.get('/:categoryId/products/:productsId', (req, res) => {
-  const {categoryId, productsId} = req.params;
-  res.json([
-    {
-      categoryId,
-      productsId,
-    },
-  ]);
-});
-
 router.post('/',
   validatorHandler(createCategorySchema, 'body'),
   async (req, res, next) => {

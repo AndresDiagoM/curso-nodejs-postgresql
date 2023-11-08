@@ -3,11 +3,14 @@ const Joi = require('joi');
 
 
 const id = Joi.alternatives().try(Joi.string().uuid(), Joi.number());
-const name = Joi.string().min(3).max(30).alphanum();
+// allow spaces in name
+const name = Joi.string().min(3).max(30).regex(/^[a-zA-Z ]+$/);
+// const name = Joi.string().min(3).max(30).alphanum();
 const price = Joi.number().min(1).max(1000000);
-const description = Joi.string().min(3).max(50).alphanum();
+const description = Joi.string().min(3).max(50).regex(/^[a-zA-Z ]+$/);
 const image = Joi.string().uri();
 // const isBlock = Joi.boolean();
+const categoryId = Joi.number().min(1).max(100);
 
 const createProductSchema = Joi.object({
   name: name.required(),
@@ -15,6 +18,7 @@ const createProductSchema = Joi.object({
   image: image.required(),
   description: description.required(),
   // isBlock: isBlock.required(),
+  categoryId: categoryId.required(),
 });
 
 const updateProductSchema = Joi.object({
@@ -23,6 +27,7 @@ const updateProductSchema = Joi.object({
   image,
   description,
   // isBlock,
+  categoryId,
 });
 
 const getProductSchema = Joi.object({

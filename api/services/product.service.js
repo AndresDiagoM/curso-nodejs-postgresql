@@ -7,24 +7,20 @@ const { models } = require('../../libs/sequelize');
 
 class ProductsService {
 
-  constructor() {
-
-  }
+  constructor() {}
 
   async getAll() {
-    const products = await models.Product.findAll();
+    const products = await models.Product.findAll({
+      include: {
+        model: models.Category,
+        as: 'category',
+      },
+    });
     return products;
   }
 
   async add(product) {
-    if(!product || Object.keys(product).length === 0) {
-      throw boom.badRequest('invalid data');
-    }
-    let newProduct = {
-      ...product,
-      createdAt: new Date(),
-    }
-    let created = await models.User.create(newProduct);
+    let created = await models.Product.create(product);
     return created;
   }
 
