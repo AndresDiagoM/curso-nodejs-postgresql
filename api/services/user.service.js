@@ -7,9 +7,7 @@ const { models } = require('../../libs/sequelize');
 
 class UsersService  {
 
-  constructor() {
-
-  }
+  constructor() {}
 
   async getAll(limit, offset) {
     const result = await models.User.findAll({

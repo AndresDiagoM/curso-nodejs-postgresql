@@ -61,6 +61,10 @@ class Customer extends Model {
     this.belongsTo(models.User, {
       as: 'user',  // with this alias, we can use it to include the user in the findAll method in customer service
     });
+    this.hasMany(models.Order, {
+      as: 'orders',
+      foreignKey: 'customer_id',
+    });
   }
 
   static config(sequelize) {

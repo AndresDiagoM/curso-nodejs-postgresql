@@ -11,7 +11,7 @@ class CustomersService  {
 
   async getAll(limit, offset) {
     const result = await models.Customer.findAll({
-      include: ['user'],
+      include: ['user', 'orders'],
     });
     return result;
   }
