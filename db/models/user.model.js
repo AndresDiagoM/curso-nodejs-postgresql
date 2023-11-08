@@ -51,7 +51,7 @@ class User extends Model {
   // static methods -> this are class methods, not instance methods
   static associate(models){
     this.hasOne(models.Customer, {
-      foreignKey: 'user_id',
+      foreignKey: 'userId',
       as: 'customer',
     });
   }

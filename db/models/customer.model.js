@@ -63,7 +63,7 @@ class Customer extends Model {
     });
     this.hasMany(models.Order, {
       as: 'orders',
-      foreignKey: 'customer_id',
+      foreignKey: 'customerId',
     });
   }
 

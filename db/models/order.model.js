@@ -27,6 +27,12 @@ const OrderSchema = {
     field: 'created_at',
     defaultValue: Sequelize.NOW,
   },
+  total: {
+    type: DataTypes.VIRTUAL, // this is a virtual field, not a column in db, it's calculated from items
+    get() {
+      return this.items.reduce((acc, item) => acc + item.price * item.OrderProduct.amount, 0);
+    }
+  },
 }
 
 class Order extends Model {
@@ -34,7 +40,7 @@ class Order extends Model {
     this.belongsTo(models.Customer, {as: 'customer'});
     this.belongsToMany(models.Product, {
       as: 'items',
-      through: 'orders-products',
+      through: models.OrderProduct,
       foreignKey: 'orderId',
       otherKey: 'productId',
     });

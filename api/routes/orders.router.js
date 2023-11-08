@@ -5,7 +5,12 @@ const OrdersService = require('../services/order.service');
 const service = new OrdersService();
 
 const validatorHandler = require('../middlewares/validator.handler');
-const {createOrderSchema, updateOrderSchema, getOrderSchema} = require('../schemas/order.schema');
+const {
+  createOrderSchema,
+  updateOrderSchema,
+  getOrderSchema,
+  addItemSchema
+} = require('../schemas/order.schema');
 
 router.get('/', async (req, res, next) => {
   const {limit, offset} = req.query;
@@ -36,6 +41,22 @@ router.post('/',
     const body = req.body;
     try{
       let added = await service.add(body);
+      return res.status(201).json({
+        message: 'created',
+        data: added,
+      });
+    }catch (err){
+      next(err);
+    }
+  }
+);
+
+router.post('/add-item',
+  validatorHandler(addItemSchema, 'body'),
+  async (req, res, next) => {
+    const body = req.body;
+    try{
+      let added = await service.addItem(body);
       return res.status(201).json({
         message: 'created',
         data: added,

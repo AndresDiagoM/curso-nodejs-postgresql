@@ -9,6 +9,9 @@ class OrdersService  {
 
   async getAll(limit, offset) {
     const result = await models.Order.findAll({
+      attributes: {
+        exclude: ['customer_id'], // Exclude 'customer_id' from the Order model
+      },
       include: ['customer'],
     });
     return result;
@@ -18,21 +21,28 @@ class OrdersService  {
     if(!order || Object.keys(order).length === 0) {
       throw boom.badRequest('invalid data');
     }
-    let neworder = {
-      ...order,
-      createdAt: new Date(),
+    let created = await models.Order.create(order);
+    return created;
+  }
+
+  async addItem(order) {
+    if(!order || Object.keys(order).length === 0) {
+      throw boom.badRequest('invalid data');
     }
-    let created = await models.Order.create(neworder);
+    let created = await models.OrderProduct.create(order);
     return created;
   }
 
   async find(id) {
     const order = await models.Order.findByPk(id, {
-      include: [{
-        model: models.Customer,
-        as: 'customer',
-        include: ['user'], // anidar relaciones
-      }],
+      include: [
+        {
+          model: models.Customer,
+          as: 'customer',
+          include: ['user'], // anidar relaciones
+        },
+        'items'
+      ],
     });
     if(!order) {
       throw boom.notFound('order not found');
