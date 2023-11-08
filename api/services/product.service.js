@@ -33,9 +33,6 @@ class ProductsService {
     if(!product) {
       throw boom.notFound('product not found');
     }
-    // if(product.isBlock) {
-    //   throw boom.conflict('product is blocked');
-    // }
     return product;
   }
 
