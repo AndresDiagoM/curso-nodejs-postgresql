@@ -30,7 +30,12 @@ const OrderSchema = {
   total: {
     type: DataTypes.VIRTUAL, // this is a virtual field, not a column in db, it's calculated from items
     get() {
-      return this.items.reduce((acc, item) => acc + item.price * item.OrderProduct.amount, 0);
+      if(this.items.length > 0) {
+        return this.items.reduce((total, items) => {
+          return total + items.price * items.OrderProduct.amount;
+        }, 0);
+      }
+      return 0;
     }
   },
 }

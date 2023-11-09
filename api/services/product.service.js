@@ -9,13 +9,16 @@ class ProductsService {
 
   constructor() {}
 
-  async getAll() {
-    const products = await models.Product.findAll({
-      include: {
-        model: models.Category,
-        as: 'category',
-      },
-    });
+  async getAll(query) {
+    const options = {
+      include: ['category'],
+    };
+    const {limit, offset} = query;
+    if(limit && offset) {
+      options.limit = limit;
+      options.offset = offset;
+    }
+    const products = await models.Product.findAll(options);
     return products;
   }
 

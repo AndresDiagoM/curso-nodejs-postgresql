@@ -9,10 +9,7 @@ class OrdersService  {
 
   async getAll(limit, offset) {
     const result = await models.Order.findAll({
-      attributes: {
-        exclude: ['customer_id'], // Exclude 'customer_id' from the Order model
-      },
-      include: ['customer'],
+      include: ['customer', 'items'],
     });
     return result;
   }

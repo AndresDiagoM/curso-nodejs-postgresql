@@ -1,73 +1,39 @@
 const {faker} = require('@faker-js/faker');
 const boom = require('@hapi/boom');
 
-class peoplesService {
-  constructor($http) {
-    this.peoples = [];
-    this.generate();
-  }
+const {models} = require('../../libs/sequelize');
 
-  generate(){
-    let size = 5;
-    for(let i=0; i<size; i++){
-      this.peoples.push({
-        id: faker.string.uuid(),
-        name: faker.person.firstName(),
-        lastName: faker.person.lastName(),
-        email: faker.internet.email(),
-      });
-    }
-    // console.log(this.peoples);
-  }
+class peoplesService {
+  constructor() {}
 
   async getAll() {
-    return this.peoples;
-  }
-
-  async getById(id) {
-    const people = this.peoples.find(item => item.id === id);
-    if(!people) {
-      throw boom.notFound('people not found');
-    }
-    if(!id) {
-      throw boom.badRequest('id must be sent');
-    }
+    const people = await models.People.findAll();
     return people;
   }
 
-  async add(people) {
-    if(!people || Object.keys(people).length === 0) {
-      throw boom.badRequest('invalid data');
+  async getById(id) {
+    const person = await models.People.findByPk(id);
+    if(!person) {
+      throw boom.notFound('person not found');
     }
-    let newPeople = {
-      id: faker.string.uuid(),
-      ...people,
-    }
-    this.peoples.push(newPeople);
+    return person;
+  }
+
+  async add(person) {
+    const newPeople = await models.People.create(person);
     return newPeople;
   }
 
   async remove(id) {
-    const index = this.peoples.findIndex(item => item.id === id);
-    if(index === -1) {
-      throw boom.notFound('people not found');
-    }
-    const people = this.peoples[index];
-    this.peoples.splice(index, 1);
-    return people;
+    const person = await this.getById(id);
+    (await person).destroy();
+    return id;
   }
 
   async update(id, people) {
-    const index = this.peoples.findIndex(item => item.id === id);
-    if(index === -1) {
-      throw boom.notFound('people not found');
-    }
-    const person = this.peoples[index];
-    this.peoples[index] = {
-      ...person,
-      ...people,
-    };
-    return this.peoples[index];
+    const person = await this.getById(id);
+    const updated = (await person).update(people);
+    return updated;
   }
 
 }
