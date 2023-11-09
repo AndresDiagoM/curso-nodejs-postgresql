@@ -15,6 +15,14 @@ const config = {
   //   host: process.env.DB_HOST || 'localhost',
   //   port: process.env.DB_PORT || 5432,
 
+  // vercel env variables
+  connectionString: process.env.POSTGRES_URL + "?sslmode=require",
+  vercelDbURL: process.env.POSTGRES_URL,
+  vercelDbDatabase: process.env.POSTGRES_DATABASE,
+  vercelDbHost: process.env.POSTGRES_HOST,
+  vercelDbUser: process.env.POSTGRES_USER,
+  vercelDbPassword: process.env.POSTGRES_PASSWORD,
+
 };
 
 module.exports = config;

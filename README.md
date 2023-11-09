@@ -12,6 +12,7 @@ This course provides in-depth knowledge and hands-on experience with building RE
   - [Overview](#overview)
   - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
+  - [VERCEL DEPLOY](#vercel-deploy)
   - [Api Endpoints](#api-endpoints)
   - [Contributing](#contributing)
   - [License](#license)
@@ -44,6 +45,13 @@ To start the API server:
   ```
 Then, visit http://localhost:PORT in your browser or API tool.
 
+## VERCEL DEPLOY
+
+The project is deployed in Vercel, you can see it in the following link:
+
+[curso-nodejs-postgresql.vercel.app](https://curso-nodejs-postgresql.vercel.app/)
+
+
 
 ## Api Endpoints
 
@@ -64,6 +72,12 @@ Then, visit http://localhost:PORT in your browser or API tool.
 | /api/categories | POST | CREATE | Add a category |
 | /api/categories/:id | PUT | UPDATE | Update a category |
 | /api/categories/:id | DELETE | DELETE | Delete a category |
+| /api/orders | GET | READ | Get all orders |
+| /api/orders/:id | GET | READ | Get a single order |
+| /api/orders | POST | CREATE | Add an order |
+| /api/orders/:id | PUT | UPDATE | Update an order |
+| /api/orders/:id | DELETE | DELETE | Delete an order |
+
 
 ## Contributing
 

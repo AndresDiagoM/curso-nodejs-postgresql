@@ -18,7 +18,16 @@ module.exports = {
       {
         name: 'Customer 2',
         last_name: 'Customer 2',
-        email: 'custom22@gmail.com',
+        email: 'cus2@mail.com',
+        address: 'Address 2',
+        birth_date: '1990-01-01',
+        created_at: new Date(),
+        user_id: 2,
+      },
+      {
+        name: 'Steve',
+        last_name: 'Jobs',
+        email: 'steveApple@gmail.com',
         address: 'Address 2',
         birth_date: '1990-01-01',
         created_at: new Date(),

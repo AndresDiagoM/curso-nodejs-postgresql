@@ -23,7 +23,16 @@ module.exports = {
         role: 'user',
         is_block: false,
         created_at: new Date(),
-      }
+      },
+      {
+        name: 'Steve',
+        last_name: 'Jobs',
+        email: 'steveApple@appe-inc.es',
+        password: '123456',
+        role: 'user',
+        is_block: false,
+        created_at: new Date(),
+      },
     ]);
   },
 
