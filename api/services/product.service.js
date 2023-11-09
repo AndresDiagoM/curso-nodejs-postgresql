@@ -4,6 +4,7 @@ const boom = require('@hapi/boom');
 const pool = require('../../libs/postgres.pool');
 const sequelize = require('../../libs/sequelize');
 const { models } = require('../../libs/sequelize');
+const { Op } = require('sequelize'); // Op is operators for sequelize, like: Op.between
 
 class ProductsService {
 
@@ -17,6 +18,16 @@ class ProductsService {
     if(limit && offset) {
       options.limit = limit;
       options.offset = offset;
+    }
+    const {price, price1, price2} = query;
+    if(price) {
+      options.where = {price};
+    }else if(price1 && price2) {
+      options.where = {
+        price: {
+          [Op.between]: [price1, price2],
+        },
+      };
     }
     const products = await models.Product.findAll(options);
     return products;
