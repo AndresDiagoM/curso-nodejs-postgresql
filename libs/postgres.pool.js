@@ -2,19 +2,21 @@ const {Pool} = require('pg');
 
 const config = require('../config/config');
 
+const options ={};
+
 const USER = encodeURIComponent(config.dbUser);
 const PASSWORD = encodeURIComponent(config.dbPassword);
-const URI = `postgres://${USER}:${PASSWORD}@${config.dbHost}:${config.dbPort}/${config.dbName}`;
+let URI = `postgres://${USER}:${PASSWORD}@${config.dbHost}:${config.dbPort}/${config.dbName}`;
 
+if(config.isProd){
+  options.connectionString = config.connectionString;
+  options.ssl =  {
+    rejectUnauthorized: false
+  };
+} else {
+  options.connectionString = URI;
+}
 
-// const pool = new Pool({
-//   host: 'localhost',
-//   port: 5432,
-//   user: 'andres',
-//   password: 'root',
-//   database: 'my_store'
-// });
-const pool = new Pool({connectionString: URI});
-
+const pool = new Pool(options);
 
 module.exports = pool;

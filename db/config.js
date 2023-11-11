@@ -3,14 +3,15 @@ const config = require('../config/config');
 const USER = encodeURIComponent(config.dbUser);
 const PASSWORD = encodeURIComponent(config.dbPassword);
 // const URI = `postgres://${USER}:${PASSWORD}@${config.dbHost}:${config.dbPort}/${config.dbName}`;
-const URI = `${config.dbDriver}://${USER}:${PASSWORD}@${config.dbHost}:${config.dbPort}/${config.dbName}`;
+let URI = `${config.dbDriver}://${USER}:${PASSWORD}@${config.dbHost}:${config.dbPort}/${config.dbName}`;
 
-// for conecting with vercel
-const URI_vercel = config.connectionString;
+if(config.isProd){
+  URI = config.connectionString; // for conecting with vercel
+}
 
 module.exports = {
   development: {
-    url: URI_vercel,
+    url: URI,
     dialect: 'postgres',
     dialectOptions: {
       multipleStatements: true
@@ -24,10 +25,13 @@ module.exports = {
     }
   },
   production: {
-    url: URI_vercel,
+    url: URI,
     dialect: 'postgres',
     dialectOptions: {
-      multipleStatements: true
+      multipleStatements: true,
+      ssl: {
+        rejectUnauthorized: false
+      }
     }
   }
 };

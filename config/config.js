@@ -2,6 +2,7 @@ require ('dotenv').config();
 
 const config = {
   env: process.env.NODE_ENV || 'development',
+  isProd: process.env.NODE_ENV === 'production',
   port: process.env.PORT || 3000,
   host: process.env.HOST || 'http://localhost',
   apiVersion: process.env.API_VERSION || 'v1',
